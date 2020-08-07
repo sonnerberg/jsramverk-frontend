@@ -4,7 +4,8 @@ import { Reset } from 'styled-reset'
 import styled from 'styled-components'
 import { importMDX } from 'mdx.macro'
 import Home from './Home'
-import Menu from './Menu'
+import { GithubLink } from './Menu'
+import Layout from './Layout'
 // import { reports } from '../helpers/'
 // import Reports from './Reports'
 
@@ -20,12 +21,25 @@ const Centered = styled.main`
   align-items: center;
   > div {
     > h1 {
-      font-size: 3rem;
+      font-size: 2rem;
+      padding-top: 1rem;
     }
     > p {
-      color: red;
+      color: black;
+      padding: 0.4rem;
+    }
+    > pre {
+      padding: 0.3rem;
+      background: black;
+      color: white;
+      line-height: 1.5;
     }
   }
+`
+
+const FullHeight = styled.div`
+  min-height: 100vh;
+  position: relative;
 `
 
 const App = () => {
@@ -35,32 +49,27 @@ const App = () => {
   //   : null
 
   return (
-    <>
+    <FullHeight>
       <Reset />
-      <Menu />
       <Switch>
         <Route path='/reports/week/:id'>
           <Suspense fallback={<div>Loading...</div>}>
-            <Centered>
-              <Content />
-              <div style={{ paddingTop: '10px' }}>
-                <a
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  href='https://github.com/RichardNilsson/jsramverk'
-                >
-                  Link to Github
-                </a>
-              </div>
-            </Centered>
+            <Layout>
+              <Centered>
+                <Content />
+                <GithubLink linkText='Link to Github' />
+              </Centered>
+            </Layout>
           </Suspense>
           {/* <Reports report={report ? report : { content: 'no report yet' }} /> */}
         </Route>
         <Route path='/'>
-          <Home />
+          <Layout>
+            <Home />
+          </Layout>
         </Route>
       </Switch>
-    </>
+    </FullHeight>
   )
 }
 
