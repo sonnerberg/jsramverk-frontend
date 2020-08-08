@@ -1,15 +1,14 @@
-import React, { lazy, Suspense } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { Reset } from 'styled-reset'
 import styled from 'styled-components'
-import { importMDX } from 'mdx.macro'
 import Home from './Home'
 import { GithubLink } from './Menu'
 import Layout from './Layout'
+import Markdown from './../README.md'
+import ReactMarkdown from 'react-markdown'
 // import { reports } from '../helpers/'
 // import Reports from './Reports'
-
-const Content = lazy(() => importMDX('../../../README.mdx'))
 
 const Centered = styled.main`
   box-sizing: content-box;
@@ -19,21 +18,19 @@ const Centered = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  > div {
-    > h1 {
-      font-size: 2rem;
-      padding-top: 1rem;
-    }
-    > p {
-      color: black;
-      padding: 0.4rem;
-    }
-    > pre {
-      padding: 0.3rem;
-      background: black;
-      color: white;
-      line-height: 1.5;
-    }
+  > h1 {
+    font-size: 2rem;
+    padding-top: 1rem;
+  }
+  > p {
+    color: black;
+    padding: 0.4rem;
+  }
+  > pre {
+    padding: 0.3rem;
+    background: black;
+    color: white;
+    line-height: 1.5;
   }
 `
 
@@ -43,24 +40,30 @@ const FullHeight = styled.div`
 `
 
 const App = () => {
+  const [markdown, setMarkdown] = useState('')
   // const match = useRouteMatch('/reports/week/:id')
   // const report = match
   //   ? reports.find((report) => report.id === Number(match.params.id))
   //   : null
+  useEffect(() => {
+    const getMarkdown = async () => {
+      const fetchedMd = await fetch(Markdown).then((result) => result.text())
+      setMarkdown(fetchedMd)
+    }
+    getMarkdown()
+  }, [])
 
   return (
     <FullHeight>
       <Reset />
       <Switch>
         <Route path='/reports/week/:id'>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Layout>
-              <Centered>
-                <Content />
-                <GithubLink linkText='Link to Github' />
-              </Centered>
-            </Layout>
-          </Suspense>
+          <Layout>
+            <Centered>
+              <ReactMarkdown source={markdown} />
+              <GithubLink linkText='Link to Github' />
+            </Centered>
+          </Layout>
           {/* <Reports report={report ? report : { content: 'no report yet' }} /> */}
         </Route>
         <Route path='/'>

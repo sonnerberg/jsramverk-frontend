@@ -45,7 +45,7 @@ const Flex = styled.div`
 
 export const GithubLink = ({ linkText }) => (
   <StyledLink
-    to={{ pathname: 'https://github.com/sonnerberg/jsramverk' }}
+    to={{ pathname: 'https://github.com/sonnerberg/jsramverk-frontend' }}
     target='_blank'
     rel='noopener noreferrer'
     style={{ marginTop: linkText ? '0.5rem' : '' }}
