@@ -4,14 +4,18 @@ import ReactMarkdown from 'react-markdown'
 
 const MarkDownWeek1 = () => {
   const [markdown, setMarkdown] = useState('')
+
   useEffect(() => {
     const getMarkdown = async () => {
-      const fetchedMd = await fetch(Markdown).then((result) => result.text())
-      setMarkdown(fetchedMd)
+      const fetchedMd = await fetch(Markdown)
+      const parsedMd = await fetchedMd.text()
+      setMarkdown(parsedMd)
     }
     getMarkdown()
   }, [])
+
   if (!markdown) return <div>loading..</div>
+
   return <ReactMarkdown source={markdown} />
 }
 
