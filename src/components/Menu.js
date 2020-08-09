@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { GoMarkGithub } from 'react-icons/go'
 import { device } from '../helpers'
+import PropTypes from 'prop-types'
 
 const StyledLink = styled(Link)`
   color: black;
@@ -43,9 +44,13 @@ const Flex = styled.div`
   flex-grow: 1;
 `
 
-export const GithubLink = ({ linkText }) => (
+export const GithubLink = ({ linkText, pathname }) => (
   <StyledLink
-    to={{ pathname: 'https://github.com/sonnerberg/jsramverk-frontend' }}
+    to={
+      pathname
+        ? { pathname }
+        : { pathname: 'https://github.com/sonnerberg/jsramverk-frontend' }
+    }
     target='_blank'
     rel='noopener noreferrer'
     style={{ marginTop: linkText ? '0.5rem' : '' }}
@@ -53,6 +58,11 @@ export const GithubLink = ({ linkText }) => (
     {Boolean(linkText) && linkText} <GoMarkGithub />
   </StyledLink>
 )
+
+GithubLink.propTypes = {
+  pathname: PropTypes.string,
+  linkText: PropTypes.string,
+}
 
 const Menu = () => {
   return (
@@ -64,6 +74,9 @@ const Menu = () => {
         <StyledLinkDisappearing to='/'>Home</StyledLinkDisappearing>
         <StyledLinkDisappearing to='/reports/week/1'>
           First report
+        </StyledLinkDisappearing>
+        <StyledLinkDisappearing to='/reports/week/2'>
+          Second report
         </StyledLinkDisappearing>
       </Flex>
       <GithubLink />

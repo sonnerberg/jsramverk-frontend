@@ -1,13 +1,10 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useRouteMatch } from 'react-router-dom'
 import { Reset } from 'styled-reset'
 import styled from 'styled-components'
 import Home from './Home'
-import { GithubLink } from './Menu'
 import Layout from './Layout'
-import MarkdownWeek1 from './MarkdownWeek1'
-// import { reports } from '../helpers/'
-// import Reports from './Reports'
+import Markdown from './Markdown'
 
 const Centered = styled.main`
   box-sizing: content-box;
@@ -39,7 +36,7 @@ const FullHeight = styled.div`
 `
 
 const App = () => {
-  // const match = useRouteMatch('/reports/week/:id')
+  const match = useRouteMatch('/reports/week/:id')
   // const report = match
   //   ? reports.find((report) => report.id === Number(match.params.id))
   //   : null
@@ -51,8 +48,7 @@ const App = () => {
         <Route path='/reports/week/:id'>
           <Layout>
             <Centered>
-              <MarkdownWeek1 />
-              <GithubLink linkText='Link to Github' />
+              <Markdown kmomId={match && match.params.id} />
             </Centered>
           </Layout>
           {/* <Reports report={report ? report : { content: 'no report yet' }} /> */}

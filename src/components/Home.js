@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FiExternalLink } from 'react-icons/fi'
+import PropTypes from 'prop-types'
+
 const Centered = styled.main`
   box-sizing: content-box;
   margin-left: auto;
@@ -45,6 +47,11 @@ const ExternalLink = ({ pathname, text }) => (
     {text} <FiExternalLink />
   </StyledLink>
 )
+
+ExternalLink.propTypes = {
+  pathname: PropTypes.string,
+  text: PropTypes.string,
+}
 
 const Home = () => {
   const [index, setIndex] = useState('')

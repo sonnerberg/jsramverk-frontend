@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from './Menu'
 import Footer from './Footer'
+import PropTypes from 'prop-types'
 
 const Layout = ({ children }) => {
   return (
@@ -9,6 +10,10 @@ const Layout = ({ children }) => {
       <Footer />
     </>
   )
+}
+
+Layout.propTypes = {
+  children: PropTypes.object,
 }
 
 export default Layout
