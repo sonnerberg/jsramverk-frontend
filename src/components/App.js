@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { Reset } from 'styled-reset'
 import styled from 'styled-components'
 import Home from './Home'
 import { GithubLink } from './Menu'
 import Layout from './Layout'
-import Markdown from './../README.md'
-import ReactMarkdown from 'react-markdown'
+import MarkdownWeek1 from './MarkdownWeek1'
 // import { reports } from '../helpers/'
 // import Reports from './Reports'
 
@@ -40,18 +39,10 @@ const FullHeight = styled.div`
 `
 
 const App = () => {
-  const [markdown, setMarkdown] = useState('')
   // const match = useRouteMatch('/reports/week/:id')
   // const report = match
   //   ? reports.find((report) => report.id === Number(match.params.id))
   //   : null
-  useEffect(() => {
-    const getMarkdown = async () => {
-      const fetchedMd = await fetch(Markdown).then((result) => result.text())
-      setMarkdown(fetchedMd)
-    }
-    getMarkdown()
-  }, [])
 
   return (
     <FullHeight>
@@ -60,7 +51,7 @@ const App = () => {
         <Route path='/reports/week/:id'>
           <Layout>
             <Centered>
-              <ReactMarkdown source={markdown} />
+              <MarkdownWeek1 />
               <GithubLink linkText='Link to Github' />
             </Centered>
           </Layout>
