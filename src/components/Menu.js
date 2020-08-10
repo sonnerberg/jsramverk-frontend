@@ -87,7 +87,11 @@ const Menu = () => {
         {files.map((kmom, index) => (
           <StyledLinkDisappearing
             key={`${kmom}${index}`}
-            to={`/reports/week/${kmom.substring(5, 6)}`}
+            to={`/reports/week/${
+              kmom.substring(4, 5) === '0'
+                ? kmom.substring(5, 6)
+                : kmom.match(/\d+/)
+            }`}
           >
             {kmom.substring(0, 6)}
           </StyledLinkDisappearing>
