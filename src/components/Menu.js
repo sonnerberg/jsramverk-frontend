@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { GoMarkGithub } from 'react-icons/go'
@@ -19,7 +19,7 @@ const StyledLinkDisappearing = styled(StyledLink)`
   @media ${device.all} {
     display: none;
   }
-  @media ${device.mobileM} {
+  @media ${device.mobileS} {
     display: inline;
   }
 `
@@ -31,6 +31,7 @@ const Header = styled.header`
   height: 4rem;
   align-items: center;
   background: cornflowerblue;
+  flex-wrap: wrap;
 `
 
 const H1 = styled.h1`
@@ -42,6 +43,7 @@ const Flex = styled.div`
   display: flex;
   align-items: center;
   flex-grow: 1;
+  flex-wrap: wrap;
 `
 
 export const GithubLink = ({ linkText, pathname }) => (
@@ -65,6 +67,20 @@ GithubLink.propTypes = {
 }
 
 const Menu = () => {
+  const [files, setFiles] = useState([])
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      const fetchedFiles = await fetch('http://localhost:3333/reports/week')
+      const parsedFiles = await fetchedFiles.json()
+      const kmoms = parsedFiles.files.filter((file) =>
+        /^kmom[\d]{2}\.md/.test(file),
+      )
+      setFiles(kmoms)
+    }
+    fetchFiles()
+  }, [])
+
   return (
     <Header>
       <H1>
@@ -72,12 +88,14 @@ const Menu = () => {
       </H1>
       <Flex>
         <StyledLinkDisappearing to='/'>Home</StyledLinkDisappearing>
-        <StyledLinkDisappearing to='/reports/week/1'>
-          First report
-        </StyledLinkDisappearing>
-        <StyledLinkDisappearing to='/reports/week/2'>
-          Second report
-        </StyledLinkDisappearing>
+        {files.map((kmom, index) => (
+          <StyledLinkDisappearing
+            key={`${kmom}${index}`}
+            to={`/reports/week/${kmom.substring(5, 6)}`}
+          >
+            {kmom.substring(0, 6)}
+          </StyledLinkDisappearing>
+        ))}
       </Flex>
       <GithubLink />
     </Header>
