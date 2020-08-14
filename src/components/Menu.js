@@ -69,10 +69,7 @@ const Menu = () => {
     const fetchFiles = async () => {
       const fetchedFiles = await fetch('http://localhost:3333/reports/week')
       const parsedFiles = await fetchedFiles.json()
-      const kmoms = parsedFiles.files.filter((file) =>
-        /^kmom[\d]{2}\.md/.test(file),
-      )
-      setFiles(kmoms)
+      setFiles(parsedFiles.data)
     }
     fetchFiles()
   }, [])
@@ -93,7 +90,7 @@ const Menu = () => {
                 : kmom.match(/\d+/)
             }`}
           >
-            {kmom.substring(0, 6)}
+            {kmom}
           </StyledLinkDisappearing>
         ))}
       </Flex>
