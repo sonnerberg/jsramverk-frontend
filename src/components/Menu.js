@@ -4,9 +4,6 @@ import styled from 'styled-components'
 import { GoMarkGithub } from 'react-icons/go'
 import { device } from '../helpers'
 import PropTypes from 'prop-types'
-import Toggleable from './Toggleable'
-import LoginForm from './LoginForm'
-import RegisterForm from './RegisterForm'
 
 const StyledLink = styled(Link)`
   color: black;
@@ -65,7 +62,7 @@ GithubLink.propTypes = {
   linkText: PropTypes.string,
 }
 
-const Menu = () => {
+const Menu = ({ userLoggedIn }) => {
   const [files, setFiles] = useState([])
 
   useEffect(() => {
@@ -78,35 +75,28 @@ const Menu = () => {
   }, [])
 
   return (
-    <>
-      <Header>
-        <H1>
-          <StyledLink to='/'>JS-ramverk</StyledLink>
-        </H1>
-        <Flex>
-          <StyledLinkDisappearing to='/'>Home</StyledLinkDisappearing>
-          {files.map((kmom, index) => (
-            <StyledLinkDisappearing
-              key={`${kmom}${index}`}
-              to={`/reports/week/${
-                kmom.substring(4, 5) === '0'
-                  ? kmom.substring(5, 6)
-                  : kmom.match(/\d+/)
-              }`}
-            >
-              {kmom}
-            </StyledLinkDisappearing>
-          ))}
-        </Flex>
-        <GithubLink />
-      </Header>
-      <Toggleable buttonLabel='login'>
-        <LoginForm />
-      </Toggleable>
-      <Toggleable buttonLabel='register'>
-        <RegisterForm />
-      </Toggleable>
-    </>
+    <Header>
+      <H1>
+        <StyledLink to='/'>JS-ramverk</StyledLink>
+      </H1>
+      <Flex>
+        {userLoggedIn && <StyledLink to='/create'>create or update</StyledLink>}
+        <StyledLinkDisappearing to='/'>Home</StyledLinkDisappearing>
+        {files.map((kmom, index) => (
+          <StyledLinkDisappearing
+            key={`${kmom}${index}`}
+            to={`/reports/week/${
+              kmom.substring(4, 5) === '0'
+                ? kmom.substring(5, 6)
+                : kmom.match(/\d+/)
+            }`}
+          >
+            {kmom}
+          </StyledLinkDisappearing>
+        ))}
+      </Flex>
+      <GithubLink />
+    </Header>
   )
 }
 
