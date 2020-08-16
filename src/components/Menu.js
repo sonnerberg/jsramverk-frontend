@@ -100,4 +100,8 @@ const Menu = ({ userLoggedIn }) => {
   )
 }
 
+Menu.propTypes = {
+  userLoggedIn: PropTypes.bool,
+}
+
 export default Menu

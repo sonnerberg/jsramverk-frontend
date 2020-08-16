@@ -16,7 +16,10 @@ import Toggleable from './Toggleable'
 import RegisterForm from './RegisterForm'
 import loginService from '../services/login'
 import kmomService from '../services/kmoms'
+import Header from './Menu'
+import Footer from './Footer'
 import CreateUpdateKmom from './CreateUpdateKmom'
+import Message from './ColoredMessage'
 
 const Centered = styled.main`
   box-sizing: content-box;
@@ -46,14 +49,6 @@ const FullHeight = styled.div`
   min-height: 100vh;
   position: relative;
 `
-const ColoredMessage = styled.div`
-  color: ${(props) => (props.type === 'error' ? 'red' : 'green')};
-`
-
-const Message = ({ message }) => {
-  return <ColoredMessage type={message.type}>{message.msg}</ColoredMessage>
-}
-
 const App = () => {
   const loginFormRef = React.createRef()
   const history = useHistory()
@@ -92,10 +87,13 @@ const App = () => {
         setTimeout(() => {
           setMessage({})
         }, 3000)
+      } else {
+        setMessage({ type: 'error', msg: 'Wrong credentials' })
+        setTimeout(() => {
+          setMessage({})
+        }, 3000)
       }
     } catch (exception) {
-      console.error('Wrong credentials')
-      setMessage('Wrong credentials')
       console.error(exception)
       // dispatch(addNewNotification('Wrong credentials', error, 5))
     }
@@ -104,35 +102,39 @@ const App = () => {
   return (
     <FullHeight>
       <Reset />
-      <Message message={message} />
+      {message && <Message message={message} />}
+      <Header userLoggedIn={Boolean(user)} />
+      {user ? (
+        <button type='button' onClick={handleLogout}>
+          logout {user?.email}
+        </button>
+      ) : (
+        <>
+          <Toggleable
+            buttonLabel='login'
+            backgroundColor='cornflowerblue'
+            ref={loginFormRef}
+          >
+            <LoginForm handleLogin={handleLogin} />
+          </Toggleable>
+          <Toggleable buttonLabel='register' backgroundColor='cornflowerblue'>
+            <RegisterForm />
+          </Toggleable>
+        </>
+      )}
       <Switch>
+        <Route exact path='/'>
+          <Layout>
+            <Home />
+          </Layout>
+        </Route>
         <Route path='/create/:id'>
-          <Layout userLoggedIn={Boolean(user)}>
-            {user ? (
-              <button type='button' onClick={handleLogout}>
-                logout {user.email}
-              </button>
-            ) : (
-              <>
-                <Toggleable
-                  buttonLabel='login'
-                  backgroundColor='cornflowerblue'
-                  ref={loginFormRef}
-                >
-                  <LoginForm handleLogin={handleLogin} />
-                </Toggleable>
-                <Toggleable
-                  buttonLabel='register'
-                  backgroundColor='cornflowerblue'
-                >
-                  <RegisterForm />
-                </Toggleable>
-              </>
-            )}
+          <Layout>
             {user ? (
               <Centered>
                 <CreateUpdateKmom
                   kmomId={createMatch && createMatch.params.id}
+                  userLoggedIn={Boolean(user)}
                 />
               </Centered>
             ) : (
@@ -141,28 +143,7 @@ const App = () => {
           </Layout>
         </Route>
         <Route path='/create'>
-          <Layout userLoggedIn={Boolean(user)}>
-            {user ? (
-              <button type='button' onClick={handleLogout}>
-                logout {user.email}
-              </button>
-            ) : (
-              <>
-                <Toggleable
-                  buttonLabel='login'
-                  backgroundColor='cornflowerblue'
-                  ref={loginFormRef}
-                >
-                  <LoginForm handleLogin={handleLogin} />
-                </Toggleable>
-                <Toggleable
-                  buttonLabel='register'
-                  backgroundColor='cornflowerblue'
-                >
-                  <RegisterForm />
-                </Toggleable>
-              </>
-            )}
+          <Layout>
             {user ? (
               <Centered>
                 <CreateUpdateKmom />
@@ -173,64 +154,17 @@ const App = () => {
           </Layout>
         </Route>
         <Route path='/reports/week/:id'>
-          <Layout userLoggedIn={Boolean(user)}>
-            {user ? (
-              <button type='button' onClick={handleLogout}>
-                logout {user.email}
-              </button>
-            ) : (
-              <>
-                <Toggleable
-                  buttonLabel='login'
-                  backgroundColor='cornflowerblue'
-                  ref={loginFormRef}
-                >
-                  <LoginForm handleLogin={handleLogin} />
-                </Toggleable>
-                <Toggleable
-                  buttonLabel='register'
-                  backgroundColor='cornflowerblue'
-                >
-                  <RegisterForm />
-                </Toggleable>
-              </>
-            )}
+          <Layout>
             <Centered>
               <Markdown
-                userLoggedIn={Boolean(user)}
                 kmomId={reportMatch && reportMatch.params.id}
+                userLoggedIn={Boolean(user)}
               />
             </Centered>
           </Layout>
-          {/* <Reports report={report ? report : { content: 'no report yet' }} /> */}
-        </Route>
-        <Route path='/'>
-          <Layout userLoggedIn={Boolean(user)}>
-            {user ? (
-              <button type='button' onClick={handleLogout}>
-                logout {user.email}
-              </button>
-            ) : (
-              <>
-                <Toggleable
-                  buttonLabel='login'
-                  backgroundColor='cornflowerblue'
-                  ref={loginFormRef}
-                >
-                  <LoginForm handleLogin={handleLogin} />
-                </Toggleable>
-                <Toggleable
-                  buttonLabel='register'
-                  backgroundColor='cornflowerblue'
-                >
-                  <RegisterForm />
-                </Toggleable>
-              </>
-            )}
-            <Home />
-          </Layout>
         </Route>
       </Switch>
+      <Footer />
     </FullHeight>
   )
 }

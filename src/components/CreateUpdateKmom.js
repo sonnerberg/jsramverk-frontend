@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import kmomService from '../services/kmoms'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const Select = styled.select`
   display: block;
@@ -26,7 +27,7 @@ const StyledMarkdown = styled(ReactMarkdown)`
   max-width: 60vw;
 `
 
-const CreateUpdateKmom = ({ kmomId, userLoggedIn }) => {
+const CreateUpdateKmom = ({ kmomId }) => {
   const history = useHistory()
   const [kmomNumber, setKmomNumber] = useState(kmomId || '')
   const [content, setContent] = useState('')
@@ -93,6 +94,10 @@ const CreateUpdateKmom = ({ kmomId, userLoggedIn }) => {
       <StyledMarkdown source={content} />
     </div>
   )
+}
+
+CreateUpdateKmom.propTypes = {
+  kmomId: PropTypes.string,
 }
 
 export default CreateUpdateKmom

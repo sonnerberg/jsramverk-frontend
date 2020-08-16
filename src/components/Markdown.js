@@ -33,6 +33,7 @@ const Markdown = ({ kmomId, userLoggedIn }) => {
 
 Markdown.propTypes = {
   kmomId: PropTypes.string,
+  userLoggedIn: PropTypes.bool,
 }
 
 export default Markdown

@@ -45,6 +45,7 @@ Toggleable.displayName = 'Toggleable'
 Toggleable.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
   children: PropTypes.object.isRequired,
+  backgroundColor: PropTypes.string,
 }
 
 export default Toggleable
