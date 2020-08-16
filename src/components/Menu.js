@@ -67,7 +67,7 @@ const Menu = ({ userLoggedIn }) => {
 
   useEffect(() => {
     const fetchFiles = async () => {
-      const fetchedFiles = await fetch('http://localhost:3333/reports/week')
+      const fetchedFiles = await fetch('http://localhost:3333/reports')
       const parsedFiles = await fetchedFiles.json()
       setFiles(parsedFiles.data)
     }
