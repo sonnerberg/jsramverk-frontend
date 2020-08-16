@@ -58,9 +58,8 @@ const App = () => {
   const createMatch = useRouteMatch('/create/:id')
   const [message, setMessage] = useState({})
   const [user, setUser] = useState(null)
-  // const report = match
-  //   ? reports.find((report) => report.id === Number(match.params.id))
-  //   : null
+  const [files, setFiles] = useState([])
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('jsramverkSonnerberg')
     if (loggedUserJSON) {
@@ -68,6 +67,12 @@ const App = () => {
       setUser(user)
       kmomService.setToken(user.token)
     }
+    const fetchFiles = async () => {
+      const fetchedFiles = await fetch('http://localhost:3333/reports')
+      const { data } = await fetchedFiles.json()
+      setFiles(data)
+    }
+    fetchFiles()
   }, [])
 
   const handleLogout = () => {
@@ -135,7 +140,7 @@ const App = () => {
     <FullHeight>
       <Reset />
       {message && <Message message={message} />}
-      <Header userLoggedIn={Boolean(user)} />
+      <Header userLoggedIn={Boolean(user)} files={files} />
       {user ? (
         <div style={{ backgroundColor: 'cornflowerblue' }}>
           <button type='button' onClick={handleLogout}>
@@ -173,6 +178,8 @@ const App = () => {
                 <CreateUpdateKmom
                   kmomId={createMatch && createMatch.params.id}
                   userLoggedIn={Boolean(user)}
+                  files={files}
+                  setFiles={setFiles}
                 />
               </Centered>
             ) : (
@@ -184,7 +191,7 @@ const App = () => {
           <Layout>
             {user ? (
               <Centered>
-                <CreateUpdateKmom />
+                <CreateUpdateKmom files={files} setFiles={setFiles} />
               </Centered>
             ) : (
               <Redirect to='/' />

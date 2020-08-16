@@ -11,8 +11,8 @@ async function postData(url = '', data = {}, headers) {
     headers: headers
       ? headers
       : {
-          'Content-Type': 'application/json',
-        },
+        'Content-Type': 'application/json',
+      },
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(data),

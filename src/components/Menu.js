@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { GoMarkGithub } from 'react-icons/go'
@@ -62,18 +62,7 @@ GithubLink.propTypes = {
   linkText: PropTypes.string,
 }
 
-const Menu = ({ userLoggedIn }) => {
-  const [files, setFiles] = useState([])
-
-  useEffect(() => {
-    const fetchFiles = async () => {
-      const fetchedFiles = await fetch('http://localhost:3333/reports')
-      const parsedFiles = await fetchedFiles.json()
-      setFiles(parsedFiles.data)
-    }
-    fetchFiles()
-  }, [])
-
+const Menu = ({ userLoggedIn, files }) => {
   return (
     <Header>
       <H1>
@@ -82,18 +71,19 @@ const Menu = ({ userLoggedIn }) => {
       <Flex>
         {userLoggedIn && <StyledLink to='/create'>create or update</StyledLink>}
         <StyledLinkDisappearing to='/'>Home</StyledLinkDisappearing>
-        {files.map((kmom, index) => (
-          <StyledLinkDisappearing
-            key={`${kmom}${index}`}
-            to={`/reports/week/${
-              kmom.substring(4, 5) === '0'
-                ? kmom.substring(5, 6)
-                : kmom.match(/\d+/)
-            }`}
-          >
-            {kmom}
-          </StyledLinkDisappearing>
-        ))}
+        {files &&
+          files.map((kmom, index) => (
+            <StyledLinkDisappearing
+              key={`${kmom}${index}`}
+              to={`/reports/week/${
+                (kmom && kmom.substring(4, 5)) === '0'
+                  ? kmom && kmom.substring(5, 6)
+                  : kmom && kmom.match(/\d+/)
+              }`}
+            >
+              {kmom}
+            </StyledLinkDisappearing>
+          ))}
       </Flex>
       <GithubLink />
     </Header>
@@ -102,6 +92,8 @@ const Menu = ({ userLoggedIn }) => {
 
 Menu.propTypes = {
   userLoggedIn: PropTypes.bool,
+  files: PropTypes.array,
+  setFiles: PropTypes.func,
 }
 
 export default Menu

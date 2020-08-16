@@ -20,7 +20,8 @@ const Markdown = ({ kmomId, userLoggedIn }) => {
     getMarkdown()
   }, [kmomId])
 
-  if (!markdown) return <div>loading..</div>
+  // Check for githubLink because it has to be present in database
+  if (!githubLink) return <div>loading..</div>
 
   return (
     <>

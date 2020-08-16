@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import FormWrapper from './FormWrapper'
+import PropTypes from 'prop-types'
 
 const RegisterForm = ({ handleRegister }) => {
   const [email, setEmail] = useState('')
@@ -48,6 +49,10 @@ const RegisterForm = ({ handleRegister }) => {
       </form>
     </FormWrapper>
   )
+}
+
+RegisterForm.propTypes = {
+  handleRegister: PropTypes.func,
 }
 
 export default RegisterForm

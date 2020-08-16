@@ -27,7 +27,7 @@ const StyledMarkdown = styled(ReactMarkdown)`
   max-width: 60vw;
 `
 
-const CreateUpdateKmom = ({ kmomId }) => {
+const CreateUpdateKmom = ({ kmomId, files, setFiles }) => {
   const history = useHistory()
   const [kmomNumber, setKmomNumber] = useState(kmomId || '')
   const [content, setContent] = useState('')
@@ -35,19 +35,23 @@ const CreateUpdateKmom = ({ kmomId }) => {
 
   useEffect(() => {
     const fetchKmom = async () => {
-      if (kmomNumber) {
+      const kmomString = kmomNumber
+        ? `kmom${kmomNumber.match(/[\d]$/)[0].padStart(2, '0')}`
+        : null
+      if (kmomNumber && files.includes(kmomString)) {
         const fetchedKmom = await fetch(
           `http://localhost:3333/reports/week/${kmomNumber}`,
         )
         const parsedKmom = await fetchedKmom.json()
-        setContent(parsedKmom.markdown ? parsedKmom.markdown : '')
-        setGithubLink(
-          parsedKmom.link ? parsedKmom.link : 'http://www.github.com/',
-        )
+        setContent(parsedKmom.markdown)
+        setGithubLink(parsedKmom.link)
+      } else {
+        setContent('')
+        setGithubLink('http://www.github.com/')
       }
     }
     fetchKmom()
-  }, [kmomNumber])
+  }, [kmomNumber, files])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -56,6 +60,10 @@ const CreateUpdateKmom = ({ kmomId }) => {
       content,
       githubLink,
     })
+    const kmomString = `kmom${kmom.match(/[\d]$/)[0].padStart(2, '0')}`
+    const newKmom = !files.includes(kmomString)
+
+    if (newKmom) setFiles([...files, kmomString])
     if (kmom) history.push(kmom.match(/\/reports.*$/)[0])
   }
 
@@ -98,6 +106,8 @@ const CreateUpdateKmom = ({ kmomId }) => {
 
 CreateUpdateKmom.propTypes = {
   kmomId: PropTypes.string,
+  files: PropTypes.array,
+  setFiles: PropTypes.func,
 }
 
 export default CreateUpdateKmom
