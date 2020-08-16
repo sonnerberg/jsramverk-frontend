@@ -20,7 +20,6 @@ const create = async (newKmom) => {
   })
 
   const response = await postData(baseUrl, newKmom, headers)
-  console.log('response', response)
   return response.data
 }
 

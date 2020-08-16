@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import { postData } from '../services/fetchHelpers'
 import FormWrapper from './FormWrapper'
 
-const RegisterForm = () => {
+const RegisterForm = ({ handleRegister }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [response, setResponse] = useState('')
 
   const revealPassword = () => {
     setShowPassword(!showPassword)
@@ -14,22 +12,12 @@ const RegisterForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const data = await postData('http://localhost:3333/register', {
-      email,
-      password,
-    })
+    const success = await handleRegister({ email, password })
 
-    if (!data.errors) {
-      setPassword('')
+    if (success) {
       setEmail('')
-      // close register
+      setPassword('')
     }
-
-    setResponse(data?.errors ? data.errors : data)
-
-    setTimeout(() => {
-      setResponse('')
-    }, 5000)
   }
 
   return (
@@ -58,11 +46,6 @@ const RegisterForm = () => {
         />
         <button type='submit'>register</button>
       </form>
-      {response ? (
-        <div>
-          {response.title}: {response.detail}
-        </div>
-      ) : null}
     </FormWrapper>
   )
 }

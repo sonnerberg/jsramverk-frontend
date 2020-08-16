@@ -15,6 +15,7 @@ import LoginForm from './LoginForm'
 import Toggleable from './Toggleable'
 import RegisterForm from './RegisterForm'
 import loginService from '../services/login'
+import registerService from '../services/register'
 import kmomService from '../services/kmoms'
 import Header from './Menu'
 import Footer from './Footer'
@@ -51,6 +52,7 @@ const FullHeight = styled.div`
 `
 const App = () => {
   const loginFormRef = React.createRef()
+  const registerFormRef = React.createRef()
   const history = useHistory()
   const reportMatch = useRouteMatch('/reports/week/:id')
   const createMatch = useRouteMatch('/create/:id')
@@ -99,15 +101,47 @@ const App = () => {
     }
   }
 
+  const handleRegister = async (registerObject) => {
+    try {
+      await registerService.register(registerObject)
+
+      const user = await loginService.login(registerObject)
+
+      if (user) {
+        window.localStorage.setItem('jsramverkSonnerberg', JSON.stringify(user))
+        registerFormRef.current.toggleVisibility()
+        setUser(user)
+        kmomService.setToken(user.token)
+        setMessage({ type: 'success', msg: 'user created and logged in' })
+        setTimeout(() => {
+          setMessage({})
+        }, 3000)
+      } else {
+        setMessage({
+          type: 'error',
+          msg: 'User not created.',
+        })
+        setTimeout(() => {
+          setMessage({})
+        }, 3000)
+      }
+    } catch (exception) {
+      console.error(exception)
+      // dispatch(addNewNotification('Wrong credentials', error, 5))
+    }
+  }
+
   return (
     <FullHeight>
       <Reset />
       {message && <Message message={message} />}
       <Header userLoggedIn={Boolean(user)} />
       {user ? (
-        <button type='button' onClick={handleLogout}>
-          logout {user?.email}
-        </button>
+        <div style={{ backgroundColor: 'cornflowerblue' }}>
+          <button type='button' onClick={handleLogout}>
+            logout {user?.email}
+          </button>
+        </div>
       ) : (
         <>
           <Toggleable
@@ -117,8 +151,12 @@ const App = () => {
           >
             <LoginForm handleLogin={handleLogin} />
           </Toggleable>
-          <Toggleable buttonLabel='register' backgroundColor='cornflowerblue'>
-            <RegisterForm />
+          <Toggleable
+            ref={registerFormRef}
+            buttonLabel='register'
+            backgroundColor='cornflowerblue'
+          >
+            <RegisterForm handleRegister={handleRegister} />
           </Toggleable>
         </>
       )}
