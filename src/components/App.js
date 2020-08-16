@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
+import {
+  Switch,
+  Route,
+  useRouteMatch,
+  useHistory,
+  Redirect,
+} from 'react-router-dom'
 import { Reset } from 'styled-reset'
 import styled from 'styled-components'
 import Home from './Home'
@@ -20,15 +26,15 @@ const Centered = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  > h1 {
+  h1 {
     font-size: 2rem;
     padding-top: 1rem;
   }
-  > p {
+  p {
     color: black;
     padding: 0.4rem;
   }
-  > pre {
+  pre {
     padding: 0.3rem;
     background: black;
     color: white;
@@ -40,11 +46,20 @@ const FullHeight = styled.div`
   min-height: 100vh;
   position: relative;
 `
+const ColoredMessage = styled.div`
+  color: ${(props) => (props.type === 'error' ? 'red' : 'green')};
+`
+
+const Message = ({ message }) => {
+  return <ColoredMessage type={message.type}>{message.msg}</ColoredMessage>
+}
 
 const App = () => {
   const loginFormRef = React.createRef()
   const history = useHistory()
-  const match = useRouteMatch('/reports/week/:id')
+  const reportMatch = useRouteMatch('/reports/week/:id')
+  const createMatch = useRouteMatch('/create/:id')
+  const [message, setMessage] = useState({})
   const [user, setUser] = useState(null)
   // const report = match
   //   ? reports.find((report) => report.id === Number(match.params.id))
@@ -73,9 +88,14 @@ const App = () => {
         loginFormRef.current.toggleVisibility()
         setUser(user)
         kmomService.setToken(user.token)
+        setMessage({ type: 'success', msg: 'user logged in' })
+        setTimeout(() => {
+          setMessage({})
+        }, 3000)
       }
     } catch (exception) {
       console.error('Wrong credentials')
+      setMessage('Wrong credentials')
       console.error(exception)
       // dispatch(addNewNotification('Wrong credentials', error, 5))
     }
@@ -84,7 +104,42 @@ const App = () => {
   return (
     <FullHeight>
       <Reset />
+      <Message message={message} />
       <Switch>
+        <Route path='/create/:id'>
+          <Layout userLoggedIn={Boolean(user)}>
+            {user ? (
+              <button type='button' onClick={handleLogout}>
+                logout {user.email}
+              </button>
+            ) : (
+              <>
+                <Toggleable
+                  buttonLabel='login'
+                  backgroundColor='cornflowerblue'
+                  ref={loginFormRef}
+                >
+                  <LoginForm handleLogin={handleLogin} />
+                </Toggleable>
+                <Toggleable
+                  buttonLabel='register'
+                  backgroundColor='cornflowerblue'
+                >
+                  <RegisterForm />
+                </Toggleable>
+              </>
+            )}
+            {user ? (
+              <Centered>
+                <CreateUpdateKmom
+                  kmomId={createMatch && createMatch.params.id}
+                />
+              </Centered>
+            ) : (
+              <Redirect to='/' />
+            )}
+          </Layout>
+        </Route>
         <Route path='/create'>
           <Layout userLoggedIn={Boolean(user)}>
             {user ? (
@@ -108,7 +163,13 @@ const App = () => {
                 </Toggleable>
               </>
             )}
-            <CreateUpdateKmom />
+            {user ? (
+              <Centered>
+                <CreateUpdateKmom />
+              </Centered>
+            ) : (
+              <Redirect to='/' />
+            )}
           </Layout>
         </Route>
         <Route path='/reports/week/:id'>
@@ -135,7 +196,10 @@ const App = () => {
               </>
             )}
             <Centered>
-              <Markdown kmomId={match && match.params.id} />
+              <Markdown
+                userLoggedIn={Boolean(user)}
+                kmomId={reportMatch && reportMatch.params.id}
+              />
             </Centered>
           </Layout>
           {/* <Reports report={report ? report : { content: 'no report yet' }} /> */}
