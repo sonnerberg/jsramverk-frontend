@@ -1,6 +1,6 @@
 import { postData } from './fetchHelpers'
 
-const baseUrl = 'http://localhost:3333/register'
+const baseUrl = '/register'
 
 const register = async (credentials) => {
   const response = await postData(baseUrl, credentials)

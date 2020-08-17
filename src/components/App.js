@@ -68,7 +68,7 @@ const App = () => {
       kmomService.setToken(user.token)
     }
     const fetchFiles = async () => {
-      const fetchedFiles = await fetch('http://localhost:3333/reports')
+      const fetchedFiles = await fetch('/reports')
       const { data } = await fetchedFiles.json()
       setFiles(data)
     }

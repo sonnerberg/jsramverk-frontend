@@ -1,6 +1,6 @@
 import { postData } from './fetchHelpers'
 
-const baseUrl = 'http://localhost:3333/reports'
+const baseUrl = '/reports'
 
 let token = null
 

@@ -1,6 +1,6 @@
 import { postData } from './fetchHelpers'
 
-const baseUrl = 'http://localhost:3333/login'
+const baseUrl = '/login'
 
 const login = async (credentials) => {
   const response = await postData(baseUrl, credentials)

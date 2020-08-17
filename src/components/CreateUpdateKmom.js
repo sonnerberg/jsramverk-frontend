@@ -39,9 +39,7 @@ const CreateUpdateKmom = ({ kmomId, files, setFiles }) => {
         ? `kmom${kmomNumber.match(/[\d]$/)[0].padStart(2, '0')}`
         : null
       if (kmomNumber && files.includes(kmomString)) {
-        const fetchedKmom = await fetch(
-          `http://localhost:3333/reports/week/${kmomNumber}`,
-        )
+        const fetchedKmom = await fetch(`/reports/week/${kmomNumber}`)
         const parsedKmom = await fetchedKmom.json()
         setContent(parsedKmom.markdown)
         setGithubLink(parsedKmom.link)

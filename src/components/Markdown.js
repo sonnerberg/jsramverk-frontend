@@ -10,9 +10,7 @@ const Markdown = ({ kmomId, userLoggedIn }) => {
 
   useEffect(() => {
     const getMarkdown = async () => {
-      const fetchedMd = await fetch(
-        `http://localhost:3333/reports/week/${kmomId}`,
-      )
+      const fetchedMd = await fetch(`/reports/week/${kmomId}`)
       const parsedMd = await fetchedMd.json()
       setMarkdown(parsedMd.markdown)
       setGithubLink(parsedMd.link)

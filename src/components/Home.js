@@ -58,9 +58,7 @@ const Home = () => {
   useEffect(() => {
     const getIndex = async () => {
       try {
-        const fetchedIndex = await fetch(
-          'http://localhost:3333',
-        ).then((result) => result.json())
+        const fetchedIndex = await fetch('/me').then((result) => result.json())
         setIndex(fetchedIndex)
       } catch {
         console.log('cannot fetch')
