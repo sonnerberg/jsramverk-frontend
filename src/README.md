@@ -30,4 +30,4 @@ Open your browser and point to the url:
 firefox localhost:3000
 ```
 
-![Setup video available inside ./src/](../setup.svg)
+![Setup video available inside ./src/ on Github](../setup.svg)
