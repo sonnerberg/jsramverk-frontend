@@ -39,7 +39,12 @@ const CreateUpdateKmom = ({ kmomId, files, setFiles }) => {
         ? `kmom${kmomNumber.match(/[\d]$/)[0].padStart(2, '0')}`
         : null
       if (kmomNumber && files.includes(kmomString)) {
-        const fetchedKmom = await fetch(`/reports/week/${kmomNumber}`)
+        const url =
+          // eslint-disable-next-line no-undef
+          process.env.NODE_ENV === 'production'
+            ? `https://me-api.sonnerberg.me/reports/week/${kmomNumber}`
+            : `/reports/week/${kmomNumber}`
+        const fetchedKmom = await fetch(url)
         const parsedKmom = await fetchedKmom.json()
         setContent(parsedKmom.markdown)
         setGithubLink(parsedKmom.link)

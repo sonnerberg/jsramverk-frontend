@@ -1,6 +1,10 @@
 import { postData } from './fetchHelpers'
 
-const baseUrl = '/reports'
+const baseUrl =
+  // eslint-disable-next-line no-undef
+  process.env.NODE_ENV === 'production'
+    ? 'https://me-api.sonnerberg.me/reports'
+    : '/reports'
 
 let token = null
 

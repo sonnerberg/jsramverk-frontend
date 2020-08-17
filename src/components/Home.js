@@ -58,7 +58,12 @@ const Home = () => {
   useEffect(() => {
     const getIndex = async () => {
       try {
-        const fetchedIndex = await fetch('/me').then((result) => result.json())
+        const url =
+          // eslint-disable-next-line no-undef
+          process.env.NODE_ENV === 'production'
+            ? 'https://me-api.sonnerberg.me/me'
+            : '/me'
+        const fetchedIndex = await fetch(url).then((result) => result.json())
         setIndex(fetchedIndex)
       } catch {
         console.log('cannot fetch')

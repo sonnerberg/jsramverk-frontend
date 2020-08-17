@@ -10,7 +10,12 @@ const Markdown = ({ kmomId, userLoggedIn }) => {
 
   useEffect(() => {
     const getMarkdown = async () => {
-      const fetchedMd = await fetch(`/reports/week/${kmomId}`)
+      const url =
+        // eslint-disable-next-line no-undef
+        process.env.NODE_ENV === 'production'
+          ? `https://me-api.sonnerberg.me/reports/week/${kmomId}`
+          : `/reports/week/${kmomId}`
+      const fetchedMd = await fetch(url)
       const parsedMd = await fetchedMd.json()
       setMarkdown(parsedMd.markdown)
       setGithubLink(parsedMd.link)

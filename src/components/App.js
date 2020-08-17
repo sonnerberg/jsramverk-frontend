@@ -68,7 +68,12 @@ const App = () => {
       kmomService.setToken(user.token)
     }
     const fetchFiles = async () => {
-      const fetchedFiles = await fetch('/reports')
+      const url =
+        // eslint-disable-next-line no-undef
+        process.env.NODE_ENV === 'production'
+          ? 'https://me-api.sonnerberg.me/reports'
+          : '/reports'
+      const fetchedFiles = await fetch(url)
       const { data } = await fetchedFiles.json()
       setFiles(data)
     }
