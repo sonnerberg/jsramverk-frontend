@@ -48,5 +48,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "proxy": "http://localhost:3333"
+  "proxy": "http://localhost:3333",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonnerberg/jsramverk-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sonnerberg/jsramverk-frontend/issues"
+  },
+  "homepage": "https://github.com/sonnerberg/jsramverk-frontend#readme"
 }
