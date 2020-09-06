@@ -31,3 +31,8 @@ firefox localhost:3000
 ```
 
 ![Setup video available inside ./src/ on Github](../setup.svg)
+
+## TODO:
+- [ ] Validate input fields with `yup`
+- [ ] Use Formik for all inputs
+
