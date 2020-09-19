@@ -26,4 +26,4 @@ setup
 *.sqlite
 .env
 
-/test/images/*
+/test/images/*.png
