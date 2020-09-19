@@ -9,6 +9,8 @@ const screen = {
   height: 1080,
 }
 
+const testUrl = 'https://sonnerberg.me/'
+
 // https://stackoverflow.com/a/49185175
 async function takeScreenshot(driver, file) {
   let image = await driver.takeScreenshot()
@@ -24,7 +26,7 @@ test.describe('JS-ramverk', function () {
       .forBrowser('firefox')
       .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
       .build()
-    driver.get('http://localhost:3000')
+    driver.get(testUrl)
   })
 
   test.it('Check title for home', async function () {
@@ -94,9 +96,9 @@ test.describe('JS-ramverk', function () {
     const link = await driver.wait(until.elementLocated(By.linkText('Home')))
     await link.click()
 
-    driver.wait(until.urlIs('http://localhost:3000/'))
+    driver.wait(until.urlIs(testUrl))
     const url = await driver.getCurrentUrl()
-    assert.ok(url.endsWith('localhost:3000/'))
+    assert.strictEqual(url, testUrl)
     await takeScreenshot(driver, 'home.png')
   })
 
