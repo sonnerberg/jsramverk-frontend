@@ -1,6 +1,9 @@
-before_install:
-  - git clone https://github.com/sonnerberg/jsramverk-frontend && npm start --prefix jsramverk-frontend
-  - git clone https://github.com/sonnerberg/jsramverk-backend && npm start --prefix jsramverk-backend
 language: node_js
 node_js:
   - 14
+before_install:
+  - git clone https://github.com/sonnerberg/jsramverk-frontend /tmp/frontend
+  - git clone https://github.com/sonnerberg/jsramverk-backend /tmp/backend
+script:
+  - npm start --prefix /tmp/frontend &
+  - npm start --prefix /tmp/backend &
