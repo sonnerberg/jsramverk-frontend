@@ -4,6 +4,7 @@ node_js:
 before_install:
   - git clone https://github.com/sonnerberg/jsramverk-backend backend
 script:
+  - npm start &
   - npm install --prefix backend
   - npm start --prefix backend &
-  - npm start && npm test
+  - npm test
