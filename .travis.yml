@@ -2,11 +2,8 @@ language: node_js
 node_js:
   - 14
 before_install:
-  - git clone https://github.com/sonnerberg/jsramverk-frontend frontend
   - git clone https://github.com/sonnerberg/jsramverk-backend backend
 script:
-  - npm install --prefix frontend
-  - npm start --prefix frontend &
   - npm install --prefix backend
   - npm start --prefix backend &
-  - npm test
+  - npm start && npm test
