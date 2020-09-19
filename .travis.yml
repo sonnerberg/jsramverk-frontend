@@ -3,8 +3,10 @@ node_js:
   - 14
 before_install:
   - git clone https://github.com/sonnerberg/jsramverk-backend backend
+  - npm install -g serve
 script:
-  - npm start &
+  - npm run build
   - npm install --prefix backend
   - npm start --prefix backend &
+  - serve -s -l 3000 build/
   - npm test
