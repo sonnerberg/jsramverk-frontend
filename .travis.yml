@@ -7,3 +7,4 @@ before_install:
 script:
   - npm start --prefix /tmp/frontend &
   - npm start --prefix /tmp/backend &
+  - npm test
