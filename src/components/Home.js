@@ -65,6 +65,7 @@ const Home = () => {
             : '/me'
         const fetchedIndex = await fetch(url).then((result) => result.json())
         setIndex(fetchedIndex)
+        document.title = 'Home | JS-ramverk'
       } catch {
         console.log('cannot fetch')
       }

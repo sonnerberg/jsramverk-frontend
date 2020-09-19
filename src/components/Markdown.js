@@ -19,6 +19,7 @@ const Markdown = ({ kmomId, userLoggedIn }) => {
       const parsedMd = await fetchedMd.json()
       setMarkdown(parsedMd.markdown)
       setGithubLink(parsedMd.link)
+      document.title = `Kursmoment ${kmomId} | JS-ramverk`
     }
     getMarkdown()
   }, [kmomId])
