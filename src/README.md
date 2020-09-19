@@ -1,5 +1,7 @@
 # Installation instructions
 
+[![Build Status](https://travis-ci.org/sonnerberg/jsramverk-frontend.svg?branch=master)](https://travis-ci.org/sonnerberg/jsramverk-frontend)
+
 Start by cloning the repository from Github:
 
 ```bash
@@ -34,5 +36,5 @@ firefox localhost:3000
 
 - [ ] Validate input fields with `yup`
 - [ ] Use Formik for all inputs
-- [ ] Change page title when going to different pages
+- [x] ~~Change page title when going to different pages~~
 - [ ] Get markdown styles from [GitHub - sindresorhus/github-markdown-css: The minimal amount of CSS to replicate the GitHub Markdown style](https://github.com/sindresorhus/github-markdown-css)
