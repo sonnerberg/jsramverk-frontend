@@ -54,6 +54,7 @@ const CreateUpdateKmom = ({ kmomId, files, setFiles }) => {
       }
     }
     fetchKmom()
+    document.title = 'Create or Update | JS-ramverk'
   }, [kmomNumber, files])
 
   const handleSubmit = async (event) => {
