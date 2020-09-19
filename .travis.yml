@@ -5,6 +5,8 @@ before_install:
   - git clone https://github.com/sonnerberg/jsramverk-frontend /tmp/frontend
   - git clone https://github.com/sonnerberg/jsramverk-backend /tmp/backend
 script:
+  - npm install --prefix /tmp/frontend
+  - npm install --prefix /tmp/backend
   - npm start --prefix /tmp/frontend &
   - npm start --prefix /tmp/backend &
   - npm test
