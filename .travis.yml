@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - 14
+  - 13
+  - 12
+  - 11
+  - 10
 before_install:
   - git clone https://github.com/sonnerberg/jsramverk-backend backend
   - npm install -g serve
