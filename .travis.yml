@@ -8,5 +8,5 @@ script:
   - npm run build
   - npm install --prefix backend
   - npm start --prefix backend &
-  - serve -s -l 3000 build/
+  - serve -s -l 3000 build/ &
   - npm test
