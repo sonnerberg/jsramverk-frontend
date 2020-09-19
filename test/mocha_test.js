@@ -1,10 +1,17 @@
 const { Builder, By, until } = require('selenium-webdriver')
 const firefox = require('selenium-webdriver/firefox')
 const test = require('selenium-webdriver/testing')
+const fsp = require('fs').promises
 
 const screen = {
   width: 1920,
   height: 1080,
+}
+
+// https://stackoverflow.com/a/49185175
+async function takeScreenshot(driver, file) {
+  let image = await driver.takeScreenshot()
+  await fsp.writeFile(`./test/images/${file}`, image, 'base64')
 }
 
 test.describe('JS-ramverk', function () {
@@ -19,7 +26,7 @@ test.describe('JS-ramverk', function () {
     driver.get('http://localhost:3000')
   })
 
-  test.it('Check title for home', function () {
+  test.it('Check title for home', async function () {
     driver.wait(until.titleIs('Home | JS-ramverk'))
   })
 
@@ -28,6 +35,7 @@ test.describe('JS-ramverk', function () {
     await link.click()
 
     driver.wait(until.urlContains('/reports/week/1'))
+    await takeScreenshot(driver, 'kmom01.png')
   })
 
   test.it('Go to kmom01 and check title', async function () {
@@ -42,6 +50,7 @@ test.describe('JS-ramverk', function () {
     await link.click()
 
     driver.wait(until.urlContains('/reports/week/2'))
+    await takeScreenshot(driver, 'kmom02.png')
   })
 
   test.it('Go to kmom02 and check title', async function () {
@@ -56,6 +65,7 @@ test.describe('JS-ramverk', function () {
     await link.click()
 
     driver.wait(until.urlContains('/reports/week/4'))
+    await takeScreenshot(driver, 'kmom04.png')
   })
 
   test.it('Go to kmom04 and check title', async function () {
@@ -70,6 +80,7 @@ test.describe('JS-ramverk', function () {
     await link.click()
 
     driver.wait(until.urlIs('http://localhost:3000/'))
+    await takeScreenshot(driver, 'home.png')
   })
 
   test.it.skip('Use Github link', async function () {
@@ -81,10 +92,35 @@ test.describe('JS-ramverk', function () {
     driver.wait(until.urlContains('github.com'))
   })
 
-  test.it.skip(
+  test.it.only(
     'Register user and visit "create and update"',
     async function () {
       // If the user is already registered, login instead
+      const button = await driver.wait(
+        until.elementLocated(By.id('showregister')),
+      )
+      await button.click()
+      const registerEmail = await driver.wait(
+        until.elementLocated(By.id('registerEmail')),
+      )
+      await registerEmail.click()
+      registerEmail.sendKeys('test@test.com')
+      const registerPassword = await driver.wait(
+        until.elementLocated(By.id('registerPassword')),
+      )
+      await registerPassword.click()
+      registerPassword.sendKeys('testing')
+
+      const registerButton = await driver.wait(
+        until.elementLocated(By.id('registerButton')),
+      )
+      await registerButton.click()
+      const link = await driver.wait(
+        until.elementLocated(By.linkText('create or update')),
+      )
+      await link.click()
+
+      await takeScreenshot(driver, 'register.png')
     },
   )
 
