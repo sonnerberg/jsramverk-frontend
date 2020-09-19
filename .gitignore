@@ -25,3 +25,5 @@ yarn-error.log*
 setup
 *.sqlite
 .env
+
+/test/images/*
