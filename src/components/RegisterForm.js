@@ -45,7 +45,9 @@ const RegisterForm = ({ handleRegister }) => {
           value={showPassword}
           onChange={revealPassword}
         />
-        <button type='submit'>register</button>
+        <button type='submit' id='registerButton'>
+          register
+        </button>
       </form>
     </FormWrapper>
   )
