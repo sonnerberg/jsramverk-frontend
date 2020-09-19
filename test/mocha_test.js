@@ -9,7 +9,7 @@ const screen = {
   height: 1080,
 }
 
-const testUrl = 'https://sonnerberg.me/'
+const testUrl = 'http://localhost:3000/'
 
 // https://stackoverflow.com/a/49185175
 async function takeScreenshot(driver, file) {
