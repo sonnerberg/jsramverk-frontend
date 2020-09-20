@@ -11,8 +11,8 @@ build:
       tests:
         before:
           - command: 'git clone https://github.com/sonnerberg/jsramverk-backend backend'
-          - command: 'npm run build'
           - command: 'npm install --prefix backend'
+          - command: 'npm run pretest --prefix backend'
 
         override:
           - command: 'npm run start:test --prefix backend'
