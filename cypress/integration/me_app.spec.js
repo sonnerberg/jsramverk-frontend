@@ -31,7 +31,7 @@ describe('Me app', () => {
     cy.get('form[id=registerForm]').submit()
   })
 
-  it('user can login and visit create or update', () => {
+  it.skip('user can login and visit create or update', () => {
     cy.contains('login').click()
     cy.get('input[id=loginEmail]').type('cypress@test.com')
     cy.get('input[id=loginPassword]').type('salainen')
