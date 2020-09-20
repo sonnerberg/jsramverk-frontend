@@ -16,9 +16,7 @@ build:
 
         override:
           - command: 'npm run start:test --prefix backend'
-            background: true
           - command: 'npm run start'
-            background: true
           - command: npm test
             coverage:
               file: coverage/clover.xml
