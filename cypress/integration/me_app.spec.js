@@ -1,3 +1,5 @@
+/** global: cy */
+
 describe('Me app', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000')
