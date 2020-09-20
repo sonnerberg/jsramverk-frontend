@@ -11,14 +11,13 @@ build:
       tests:
         before:
           - command: 'git clone https://github.com/sonnerberg/jsramverk-backend backend'
-          - command: 'npm install -g serve'
           - command: 'npm run build'
           - command: 'npm install --prefix backend'
 
         override:
           - command: 'npm run start:test --prefix backend'
             background: true
-          - command: 'serve -s -l 3000 build'
+          - command: 'npm run start'
             background: true
           - command: npm test
             coverage:
