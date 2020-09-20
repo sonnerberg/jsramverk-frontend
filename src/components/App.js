@@ -148,7 +148,7 @@ const App = () => {
       <Header userLoggedIn={Boolean(user)} files={files} />
       {user ? (
         <div style={{ backgroundColor: 'cornflowerblue' }}>
-          <button type='button' onClick={handleLogout}>
+          <button type='button' onClick={handleLogout} id='logout'>
             logout {user?.email}
           </button>
         </div>

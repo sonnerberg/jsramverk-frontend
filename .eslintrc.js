@@ -1,9 +1,11 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   env: {
-    browser: true,
-    es2020: true,
-    node: true,
+    'browser': true,
+    'es2020': true,
+    'node': true,
+    'jest/globals': true,
+    'cypress/globals': true,
   },
   extends: ['eslint:recommended', 'plugin:react/recommended'],
   parserOptions: {
@@ -18,7 +20,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['react'],
+  plugins: ['react', 'jest'],
   rules: {
     'indent': ['error', 2],
     'linebreak-style': ['error', 'unix'],

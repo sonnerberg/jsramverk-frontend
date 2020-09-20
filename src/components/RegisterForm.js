@@ -23,7 +23,7 @@ const RegisterForm = ({ handleRegister }) => {
 
   return (
     <FormWrapper>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id='registerForm'>
         <label htmlFor='registerEmail'>Email: </label>
         <input
           id='registerEmail'

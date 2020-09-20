@@ -1,65 +1,75 @@
 {
-    "name": "frontend-jsramverk",
-    "version": "1.0.0",
-    "private": true,
-    "dependencies": {
-        "@testing-library/jest-dom": "^4.2.4",
-        "@testing-library/react": "^9.3.2",
-        "@testing-library/user-event": "^7.1.2",
-        "geckodriver": "^1.20.0",
-        "javascript-style-guide": "^1.0.1",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
-        "react-icons": "^3.10.0",
-        "react-markdown": "^4.3.1",
-        "react-router-dom": "^5.2.0",
-        "react-scripts": "3.4.1",
-        "styled-components": "^5.1.1",
-        "styled-reset": "^4.2.1"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "testReact": "react-scripts test",
-        "test": "mocha test/**/*.js",
-        "eject": "react-scripts eject",
-        "lint": "eslint .",
-        "fix": "eslint --fix .",
-        "deploy": "npm run build && rsync -av build/ digitalocean:/var/www/sonnerberg.me/html/"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "eslint-plugin-react": "^7.20.5",
-        "mocha": "^8.1.3",
-        "prop-types": "^15.7.2",
-        "selenium-webdriver": "^3.6.0"
-    },
-    "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-    "main": ".eslintrc.js",
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "proxy": "http://localhost:3333",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/sonnerberg/jsramverk-frontend.git"
-    },
-    "bugs": {
-        "url": "https://github.com/sonnerberg/jsramverk-frontend/issues"
-    },
-    "homepage": "/"
+  "name": "frontend-jsramverk",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/user-event": "^7.1.2",
+    "geckodriver": "^1.20.0",
+    "javascript-style-guide": "^1.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
+    "react-markdown": "^4.3.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "styled-components": "^5.1.1",
+    "styled-reset": "^4.2.1"
+  },
+  "scripts": {
+    "start": "react-scripts -r @cypress/instrument-cra start",
+    "build": "react-scripts build",
+    "testReact": "react-scripts test --coverage",
+    "test:mocha": "mocha test/**/*.js",
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
+    "deploy": "npm run build && rsync -av build/ digitalocean:/var/www/sonnerberg.me/html/",
+    "cypress:open": "cypress open",
+    "test": "cypress run"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@cypress/code-coverage": "^3.8.1",
+    "@cypress/instrument-cra": "^1.3.2",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "babel-plugin-istanbul": "^6.0.0",
+    "cypress": "^5.2.0",
+    "eslint-plugin-cypress": "^2.11.1",
+    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-react": "^7.20.5",
+    "istanbul-lib-coverage": "^3.0.0",
+    "mocha": "^8.1.3",
+    "nyc": "^15.1.0",
+    "prop-types": "^15.7.2",
+    "selenium-webdriver": "^3.6.0"
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": ".eslintrc.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "proxy": "http://localhost:3333",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonnerberg/jsramverk-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sonnerberg/jsramverk-frontend/issues"
+  },
+  "homepage": "/"
 }

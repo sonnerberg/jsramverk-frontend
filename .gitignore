@@ -27,3 +27,7 @@ setup
 .env
 
 /test/images/*.png
+src/images/me.jpeg
+cypress/integration/examples
+.nyc_output/out.json
+cypress/videos

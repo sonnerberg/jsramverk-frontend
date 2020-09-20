@@ -73,7 +73,7 @@ const CreateUpdateKmom = ({ kmomId, files, setFiles }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id='kmomForm'>
         <label htmlFor='kmom-select'>Choose a kmom:</label>
 
         <Select
@@ -101,7 +101,9 @@ const CreateUpdateKmom = ({ kmomId, files, setFiles }) => {
           value={githubLink}
           onChange={(event) => setGithubLink(event.target.value)}
         />
-        <button type='submit'>submit</button>
+        <button type='submit' id='submitKmom'>
+          submit
+        </button>
       </form>
       <StyledMarkdown source={content} />
     </div>

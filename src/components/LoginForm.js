@@ -18,7 +18,7 @@ const LoginForm = ({ handleLogin }) => {
 
   return (
     <FormWrapper>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id='loginForm'>
         <label htmlFor='loginEmail'>Email: </label>
         <input
           id='loginEmail'

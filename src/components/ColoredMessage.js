@@ -15,7 +15,9 @@ const MessageWrapper = styled.div`
 const Message = ({ message }) => {
   return (
     <MessageWrapper>
-      <ColoredMessage type={message.type}>{message.msg}</ColoredMessage>
+      <ColoredMessage data-testid='colored-message' type={message.type}>
+        {message.msg}
+      </ColoredMessage>
     </MessageWrapper>
   )
 }
