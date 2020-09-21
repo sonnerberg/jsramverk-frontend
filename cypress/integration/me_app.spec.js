@@ -34,16 +34,6 @@ describe('Me app', () => {
     cy.get('form[id=registerForm]').submit()
   })
 
-  it('user cannot register again', () => {
-    cy.contains('register').click()
-    cy.get('input[id=registerEmail]').type('cypress@test.com')
-    cy.get('input[id=registerPassword]').type('salnen')
-    cy.get('input[id=registerShowPassword]').check()
-    cy.get('form[id=registerForm]').submit()
-    // Wait for error message to disappear
-    cy.wait(4000)
-  })
-
   it('user can login and visit create or update', () => {
     cy.contains('login').click()
     cy.get('input[id=loginEmail]').type('cypress@test.com')
@@ -82,11 +72,22 @@ describe('Me app', () => {
     cy.wait(500)
     cy.get('button[id=logout').click()
   })
+
   it('login with wrong credentials', () => {
     cy.contains('login').click()
     cy.get('input[id=loginEmail]').type('cypress@test.com')
     cy.get('input[id=loginPassword]').type('sainen')
     cy.get('form[id=loginForm]').submit()
+    cy.wait(4000)
+  })
+
+  it('user cannot register again', () => {
+    cy.contains('register').click()
+    cy.get('input[id=registerEmail]').type('cypress@test.com')
+    cy.get('input[id=registerPassword]').type('salnen')
+    cy.get('input[id=registerShowPassword]').check()
+    cy.get('form[id=registerForm]').submit()
+    // Wait for error message to disappear
     cy.wait(4000)
   })
 })
