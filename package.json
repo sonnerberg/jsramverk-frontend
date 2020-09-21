@@ -26,7 +26,8 @@
     "fix": "eslint --fix .",
     "deploy": "npm run build && rsync -av build/ digitalocean:/var/www/sonnerberg.me/html/",
     "cypress:open": "cypress open",
-    "test": "cypress run"
+    "test": "cypress run",
+    "deploy:all": "npm run deploy && npm run deploy --prefix ../jsramverk-backend"
   },
   "eslintConfig": {
     "extends": "react-app"
