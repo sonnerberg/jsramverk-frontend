@@ -51,9 +51,8 @@ export const GithubLink = ({ linkText, pathname }) => (
     to={pathname ? { pathname } : { pathname: 'https://github.com/sonnerberg' }}
     target='_blank'
     rel='noopener noreferrer'
-    style={{ marginTop: linkText ? '0.5rem' : '' }}
+    style={{ marginTop: linkText ? '0.5rem' : '', marginBottom: '20px' }}
     id='githubUser'
-    style={{ marginBottom: '20px' }}
   >
     {Boolean(linkText) && linkText} <GoMarkGithub />
   </StyledLink>

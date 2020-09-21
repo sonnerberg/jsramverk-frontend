@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useState, useImperativeHandle } from 'react'
+import { FlexEnd } from './LoginForm'
 
 const Toggleable = React.forwardRef(
   ({ buttonLabel, children, backgroundColor }, ref) => {
@@ -27,14 +28,21 @@ const Toggleable = React.forwardRef(
     return (
       <div>
         <div>
-          <div style={hideWhenVisible}>
+          <FlexEnd style={hideWhenVisible}>
             <button onClick={toggleVisibility} id={`show${buttonLabel}`}>
               {buttonLabel}
             </button>
-          </div>
+          </FlexEnd>
           <div style={showWhenVisible}>
             {children}
-            <button onClick={toggleVisibility}>cancel {buttonLabel}</button>
+            <div>
+              <button
+                onClick={toggleVisibility}
+                style={{ margin: 'auto', display: 'block' }}
+              >
+                cancel {buttonLabel}
+              </button>
+            </div>
           </div>
         </div>
       </div>
