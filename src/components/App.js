@@ -87,28 +87,28 @@ const App = () => {
   }
 
   const handleLogin = async (loginObject) => {
-    try {
-      const user = await loginService.login(loginObject)
+    // try {
+    const user = await loginService.login(loginObject)
 
-      if (user) {
-        window.localStorage.setItem('jsramverkSonnerberg', JSON.stringify(user))
-        loginFormRef.current.toggleVisibility()
-        setUser(user)
-        kmomService.setToken(user.token)
-        setMessage({ type: 'success', msg: 'user logged in' })
-        setTimeout(() => {
-          setMessage({})
-        }, 3000)
-      } else {
-        setMessage({ type: 'error', msg: 'Wrong credentials' })
-        setTimeout(() => {
-          setMessage({})
-        }, 3000)
-      }
-    } catch (exception) {
-      console.error(exception)
-      // dispatch(addNewNotification('Wrong credentials', error, 5))
+    if (user) {
+      window.localStorage.setItem('jsramverkSonnerberg', JSON.stringify(user))
+      loginFormRef.current.toggleVisibility()
+      setUser(user)
+      kmomService.setToken(user.token)
+      setMessage({ type: 'success', msg: 'user logged in' })
+      setTimeout(() => {
+        setMessage({})
+      }, 3000)
+    } else {
+      setMessage({ type: 'error', msg: 'Wrong credentials' })
+      setTimeout(() => {
+        setMessage({})
+      }, 3000)
     }
+    // } catch (exception) {
+    //   console.error(exception)
+    //   // dispatch(addNewNotification('Wrong credentials', error, 5))
+    // }
   }
 
   const handleRegister = async (registerObject) => {

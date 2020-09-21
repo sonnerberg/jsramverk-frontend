@@ -55,20 +55,17 @@ ExternalLink.propTypes = {
 
 const Home = () => {
   const [index, setIndex] = useState('')
+
   useEffect(() => {
     const getIndex = async () => {
-      try {
-        const url =
-          // eslint-disable-next-line no-undef
-          process.env.NODE_ENV === 'production'
-            ? 'https://me-api.sonnerberg.me/me'
-            : '/me'
-        const fetchedIndex = await fetch(url).then((result) => result.json())
-        setIndex(fetchedIndex)
-        document.title = 'Home | JS-ramverk'
-      } catch {
-        console.log('cannot fetch')
-      }
+      const url =
+        // eslint-disable-next-line no-undef
+        process.env.NODE_ENV === 'production'
+          ? 'https://me-api.sonnerberg.me/me'
+          : '/me'
+      const fetchedIndex = await fetch(url).then((result) => result.json())
+      setIndex(fetchedIndex)
+      document.title = 'Home | JS-ramverk'
     }
     getIndex()
   }, [])
