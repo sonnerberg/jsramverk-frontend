@@ -105,7 +105,7 @@ const CreateUpdateKmom = ({ kmomId, files, setFiles }) => {
           submit
         </button>
       </form>
-      <StyledMarkdown source={content} />
+      <StyledMarkdown source={content} className='markdown-body' />
     </div>
   )
 }
