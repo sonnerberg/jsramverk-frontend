@@ -21,6 +21,7 @@ import Header from './Menu'
 import Footer from './Footer'
 import CreateUpdateKmom from './CreateUpdateKmom'
 import Message from './ColoredMessage'
+import '../github-markdown.css'
 
 const Centered = styled.main`
   box-sizing: content-box;
@@ -30,19 +31,18 @@ const Centered = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  h1 {
-    font-size: 2rem;
-    padding-top: 1rem;
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
   }
-  p {
-    color: black;
-    padding: 0.4rem;
-  }
-  pre {
-    padding: 0.3rem;
-    background: black;
-    color: white;
-    line-height: 1.5;
+
+  @media (max-width: 767px) {
+    .markdown-body {
+      padding: 15px;
+    }
   }
 `
 

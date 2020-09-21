@@ -11,8 +11,8 @@ async function postData(url = '', data = {}, headers) {
     headers: headers
       ? headers
       : {
-        'Content-Type': 'application/json',
-      },
+          'Content-Type': 'application/json',
+        },
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(data),
@@ -20,4 +20,27 @@ async function postData(url = '', data = {}, headers) {
   return response.json() // parses JSON response into native JavaScript objects
 }
 
-export { postData }
+async function postMarkdown(
+  data = {},
+  url = 'https://api.github.com/markdown',
+  headers,
+) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: headers
+      ? headers
+      : {
+          'Content-Type': 'application/vnd.github.v3+json',
+        },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data),
+  })
+  return response.text()
+}
+
+export { postData, postMarkdown }

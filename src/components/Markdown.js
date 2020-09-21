@@ -29,7 +29,7 @@ const Markdown = ({ kmomId, userLoggedIn }) => {
 
   return (
     <>
-      <ReactMarkdown source={markdown} />
+      <ReactMarkdown source={markdown} className='markdown-body' />
       <GithubLink pathname={githubLink} linkText='Link to repo on Github' />
       {userLoggedIn && <Link to={`/create/${kmomId}`}>edit this page</Link>}
     </>
