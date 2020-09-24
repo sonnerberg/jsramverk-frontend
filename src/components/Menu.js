@@ -85,6 +85,7 @@ const Menu = ({ userLoggedIn, files }) => {
               {kmom}
             </StyledLinkDisappearing>
           ))}
+        <StyledLinkDisappearing to='/chat'>Chat</StyledLinkDisappearing>
       </Flex>
       <GithubLink />
     </Header>

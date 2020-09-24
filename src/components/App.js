@@ -22,6 +22,7 @@ import Footer from './Footer'
 import CreateUpdateKmom from './CreateUpdateKmom'
 import Message from './ColoredMessage'
 import '../github-markdown.css'
+import Chat from './Chat'
 
 const Centered = styled.main`
   box-sizing: content-box;
@@ -190,6 +191,11 @@ const App = () => {
             ) : (
               <Redirect to='/' />
             )}
+          </Layout>
+        </Route>
+        <Route path='/chat'>
+          <Layout>
+            <Chat />
           </Layout>
         </Route>
         <Route path='/create'>
