@@ -27,7 +27,8 @@
     "deploy": "npm run build && rsync -av build/ digitalocean:/var/www/sonnerberg.me/html/",
     "cypress:open": "cypress open",
     "test": "cypress run",
-    "deploy:all": "npm run deploy && npm run deploy --prefix ../jsramverk-backend"
+    "deploy:all": "npm run deploy && npm run deploy --prefix ../jsramverk-backend",
+    "start:pm2": "pm2 start npm --name 'frontend me app' -- start --env development"
   },
   "eslintConfig": {
     "extends": "react-app"
