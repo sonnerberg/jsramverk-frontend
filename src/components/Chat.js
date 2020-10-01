@@ -47,7 +47,8 @@ const Centered = styled.div`
   align-items: center;
 `
 
-const socket = io.connect('http://localhost:8300')
+// const socket = io.connect('http://localhost:8300')
+const socket = io.connect('https://socket-server.sonnerberg.me')
 
 const Chat = () => {
   const [message, setMessage] = useState('')
