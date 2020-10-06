@@ -64,7 +64,7 @@ const CreateUpdateKmom = ({ kmomId, files, setFiles }) => {
       content,
       githubLink,
     })
-    const kmomString = `kmom${kmom.match(/[\d]$/)[0].padStart(2, '0')}`
+    const kmomString = `kmom${kmom.match(/[\d]?[\d]$/)[0].padStart(2, '0')}`
     const newKmom = !files.includes(kmomString)
 
     if (newKmom) setFiles([...files, kmomString])
