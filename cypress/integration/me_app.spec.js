@@ -8,6 +8,7 @@ describe('Me app', () => {
   it('front page can be opened', () => {
     cy.contains('loading')
     cy.contains('This is JS-ramverk')
+    cy.get('title').should('contain', 'Home')
   })
 
   it('login form can be opened', () => {
@@ -16,14 +17,17 @@ describe('Me app', () => {
 
   it('user can visit kmom01', () => {
     cy.contains('kmom01').click()
+    cy.get('title').should('contain', 'Kursmoment 1')
   })
 
   it('user can visit kmom02', () => {
     cy.contains('kmom02').click()
+    cy.get('title').should('contain', 'Kursmoment 2')
   })
 
   it('user can visit kmom04', () => {
     cy.contains('kmom04').click()
+    cy.get('title').should('contain', 'Kursmoment 4')
   })
 
   it('user can register', () => {
@@ -32,6 +36,7 @@ describe('Me app', () => {
     cy.get('input[id=registerPassword]').type('salainen')
     cy.get('input[id=registerShowPassword]').check()
     cy.get('form[id=registerForm]').submit()
+    cy.get('header').should('contain', 'create or update')
   })
 
   it('user can login and visit create or update', () => {
@@ -62,6 +67,7 @@ describe('Me app', () => {
       .clear()
       .type('https://github.com/cypress-io/cypress')
     cy.get('form[id=kmomForm').submit()
+    cy.get('header').should('contain', 'kmom10')
   })
 
   it('login and logout', () => {
@@ -79,6 +85,7 @@ describe('Me app', () => {
     cy.get('input[id=loginPassword]').type('sainen')
     cy.get('form[id=loginForm]').submit()
     cy.wait(4000)
+    cy.get('header').should('not.contain', 'create or update')
   })
 
   it('user cannot register again', () => {
@@ -89,5 +96,6 @@ describe('Me app', () => {
     cy.get('form[id=registerForm]').submit()
     // Wait for error message to disappear
     cy.wait(4000)
+    cy.get('header').should('not.contain', 'create or update')
   })
 })
