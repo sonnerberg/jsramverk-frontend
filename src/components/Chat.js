@@ -92,10 +92,10 @@ const Chat = () => {
     event.preventDefault()
     const time = `${timeFormat.format(Date.now())}`
     setName(nickname)
-    setChat((chat) => [
-      ...chat,
-      { time, name: nickname, message: 'joined the chat.' },
-    ])
+    // setChat((chat) => [
+    //   ...chat,
+    //   { time, name: nickname, message: 'joined the chat.' },
+    // ])
     socket.emit('join room', { name: nickname })
   }
 
