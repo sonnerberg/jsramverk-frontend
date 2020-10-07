@@ -52,39 +52,50 @@ const socket = io.connect('https://socket-server.sonnerberg.me')
 
 const Chat = () => {
   const [message, setMessage] = useState('')
-  const [nickname, setNickname] = useState('')
+  const [nickname, setNickname] = useState(
+    localStorage.getItem('sonnerbergChatNickname') || '',
+  )
   const [chat, setChat] = useState([])
   const [name, setName] = useState('')
   const [connectedUsers, setConnectedUsers] = useState([])
 
-  socket.on('connect', () => {
-    console.info('Connected to socket')
+  const timeFormat = new Intl.DateTimeFormat('sv', {
+    timeStyle: 'short',
+    timeZone: 'Europe/Stockholm',
   })
 
   useEffect(() => {
-    socket.on('chat message', ({ time, name, message }) => {
-      setChat([...chat, { time, name, message }])
+    socket.once('chat message', ({ time, name, message }) => {
+      setChat((chat) => [...chat, { time, name, message }])
     })
     socket.on('join room', ({ time, name, message, connectedUsers }) => {
-      setChat([...chat, { time, name, message }])
+      setChat((chat) => [...chat, { time, name, message }])
       setConnectedUsers(connectedUsers)
     })
     socket.on('leave room', ({ connectedUsers }) => {
       setConnectedUsers(connectedUsers)
     })
-  })
-
-  // TODO:
-  // Save nickname in localStorage
+    return () => {
+      socket.off('chat message')
+      socket.off('join room')
+      socket.off('leave room')
+    }
+  }, [chat])
 
   const handleChangeNickname = (event) => {
     event.preventDefault()
     setNickname(event.target.value)
+    localStorage.setItem('sonnerbergChatNickname', event.target.value)
   }
 
   const handleSubmitNickname = (event) => {
     event.preventDefault()
+    const time = `${timeFormat.format(Date.now())}`
     setName(nickname)
+    setChat((chat) => [
+      ...chat,
+      { time, name: nickname, message: 'joined the chat.' },
+    ])
     socket.emit('join room', { name: nickname })
   }
 
@@ -95,7 +106,8 @@ const Chat = () => {
 
   const handleSubmitMessage = (event) => {
     event.preventDefault()
-    // setChat([...chat, message])
+    const time = `${timeFormat.format(Date.now())}`
+    setChat((chat) => [...chat, { time, name, message }])
     if (message) socket.emit('chat message', { name, message })
     setMessage('')
   }
@@ -109,6 +121,7 @@ const Chat = () => {
             name='set-nickname'
             onChange={handleChangeNickname}
             value={nickname}
+            autoFocus
           />
           <button type='submit'>Set</button>
         </form>
