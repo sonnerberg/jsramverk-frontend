@@ -107,9 +107,11 @@ const Chat = () => {
   const handleSubmitMessage = (event) => {
     event.preventDefault()
     const time = `${timeFormat.format(Date.now())}`
-    setChat((chat) => [...chat, { time, name, message }])
-    if (message) socket.emit('chat message', { name, message })
-    setMessage('')
+    if (message) {
+      socket.emit('chat message', { name, message })
+      setChat((chat) => [...chat, { time, name, message }])
+      setMessage('')
+    }
   }
 
   if (!name) {
