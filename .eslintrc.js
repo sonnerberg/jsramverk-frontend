@@ -20,7 +20,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['react', 'jest'],
+  plugins: ['react', 'jest', 'react-hooks'],
   rules: {
     'indent': ['error', 2],
     'linebreak-style': ['error', 'unix'],
@@ -36,5 +36,7 @@ module.exports = {
         after: true,
       },
     ],
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
   },
 }
