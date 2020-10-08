@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import io from 'socket.io-client'
 
@@ -50,6 +50,28 @@ const Centered = styled.div`
 
 const socket = io.connect('http://localhost:8300')
 // const socket = io.connect('https://socket-server.sonnerberg.me')
+
+// https://stackoverflow.com/a/52266212
+const ChatWindow = ({ chat }) => {
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(scrollToBottom, [chat])
+
+  return (
+    <Messages className='all-messages'>
+      {chat.map(({ time, name, message }, index) => (
+        <p key={index + Math.random()}>
+          {time} {name} {message ? ':' : ''} {message}
+        </p>
+      ))}
+      <div ref={messagesEndRef} />
+    </Messages>
+  )
+}
 
 const Chat = () => {
   const [message, setMessage] = useState('')
@@ -150,13 +172,7 @@ const Chat = () => {
             <div key={index + Math.random()}>{name}</div>
           ))}
         </Users>
-        <Messages className='all-messages'>
-          {chat.map(({ time, name, message }, index) => (
-            <p key={index + Math.random()}>
-              {time} {name} {message ? ':' : ''} {message}
-            </p>
-          ))}
-        </Messages>
+        <ChatWindow chat={chat} />
         <NewMessage onSubmit={handleSubmitMessage}>
           <label htmlFor='set-message'>Message:</label>
           <Input
