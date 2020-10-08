@@ -25,6 +25,7 @@ const Messages = styled.div`
   grid-area: messages;
   border: 1px solid black;
   line-height: 1.2;
+  overflow: auto;
 `
 
 const Users = styled.aside`
@@ -47,8 +48,8 @@ const Centered = styled.div`
   align-items: center;
 `
 
-// const socket = io.connect('http://localhost:8300')
-const socket = io.connect('https://socket-server.sonnerberg.me')
+const socket = io.connect('http://localhost:8300')
+// const socket = io.connect('https://socket-server.sonnerberg.me')
 
 const Chat = () => {
   const [message, setMessage] = useState('')
@@ -65,6 +66,10 @@ const Chat = () => {
   })
 
   useEffect(() => {
+    socket.emit('userConnected')
+  }, [])
+
+  useEffect(() => {
     socket.once('chat message', ({ time, name, message }) => {
       setChat((chat) => [...chat, { time, name, message }])
     })
@@ -75,10 +80,15 @@ const Chat = () => {
     socket.on('leave room', ({ connectedUsers }) => {
       setConnectedUsers(connectedUsers)
     })
+    socket.on('history', (history) => {
+      console.log('about to set history')
+      setChat([...history])
+    })
     return () => {
       socket.off('chat message')
       socket.off('join room')
       socket.off('leave room')
+      socket.off('history')
     }
   }, [chat])
 
